@@ -159,36 +159,23 @@
                 <th></th>
             </tr>
             <?php
-            $req1 = "CREATE TABLE IF NOT EXISTS fichiers (
-                id INT PRIMARY KEY AUTO_INCREMENT,
-                id_user INT REFERENCES USERS,
-                nom_fichier VARCHAR(50) NOT NULL,
-                type_fichier VARCHAR(50) NOT NULL,
-                taille FLOAT NOT NULL,
-                lien VARCHAR(100) NOT NULL,
-                date_upload DATE NOT NULL
-            )";
-        
-            if ($conn->query($req1) === FALSE) {
-                die("Erreur en création de table fichiers: " . $conn->error);
-            }
-            $req1 = "select * from fichiers where id_user = '".$_SESSION["id_user"]."'";
-            $result = $conn -> query(($req1));
-            while ($row = $result -> fetch_assoc()) {
-                echo"
-                <tr>
-                <td rowspan='1'>".$row["nom_fichier"]."</td>
-                <td>".$row["type_fichier"]."</td>
-                <td>".$row["taille"]." KB</td>
-                <td>".$row["date_upload"]."</td>
-                <td>
-                <a  href='".$row["lien"]."' download ><img style = 'margin-left:10%'  src='img/download.png' alt='download'></a>
-                <a  href='php/delete.php?id_user=".$row["id_user"]."&lien=".$row["lien"]."'><img src='img/delete.png' alt='delete'></a>
-                <a href='php/share.php?lien=".$row["lien"]."' target='_blank'><img src='img/share.png' alt='share'>
-                </td>
-                </tr>
-                ";
-            }
+                $req1 = "select * from fichiers where id_user = '".$_SESSION["id_user"]."'";
+                $result = $conn -> query(($req1));
+                while ($row = $result -> fetch_assoc()) {
+                    echo"
+                    <tr>
+                    <td rowspan='1'>".$row["nom_fichier"]."</td>
+                    <td>".$row["type_fichier"]."</td>
+                    <td>".$row["taille"]." KB</td>
+                    <td>".$row["date_upload"]."</td>
+                    <td>
+                    <a  href='".$row["lien"]."' download ><img style = 'margin-left:10%'  src='img/download.png' alt='download'></a>
+                    <a  href='php/delete.php?id_user=".$row["id_user"]."&lien=".$row["lien"]."'><img src='img/delete.png' alt='delete'></a>
+                    <a href='php/share.php?lien=".$row["lien"]."' target='_blank'><img src='img/share.png' alt='share'>
+                    </td>
+                    </tr>
+                    ";
+                }
             ?>
         </table>
         
