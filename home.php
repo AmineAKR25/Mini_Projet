@@ -1,13 +1,26 @@
 <?php
     require 'php/config.php';
     session_start();
+    $req1 = "CREATE TABLE id not exists fichiers (
+    id int primary key AUTO_INCREMENT,
+    id_user int references users,
+    nom_fichier varchar(50) NOT NULL,
+    type_fichier varchar(50) NOT NULL,
+    taille float NOT NULL,
+    lien varchar(100) NOT NULL,
+    date_upload date NOT NULL,
+    unique(id_user,lien)
+    )";
+    if ($conn->query($req) === FALSE) {
+        die("Erreur en création de table users: " . $conn->error);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>FileShare - Home</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -181,7 +194,7 @@
         
         
     </div>
-    <center><a href="index.html"><button class="submit-button">Deconnecter</button></a></center>
+    <center><a href="index.html"><button class="submit-button">Déconnecter</button></a></center>
     <script>
         function updateFileName() {
             const input = document.getElementById('file-upload');
